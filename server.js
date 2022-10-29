@@ -5,10 +5,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-/*app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-*/
+
 app.use(express.static(__dirname));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -16,6 +13,10 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.emit('test', 'hello')
+  socket.on('cTest', (data) => {
+    console.log(data);
+  })
 });
 
 server.listen(3000, () => {
