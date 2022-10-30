@@ -4,6 +4,7 @@ const input = document.getElementById('info');
 const message = document.getElementById('message');
 const button = document.getElementById('send');
 
+
 //socket.on('test', (data) =>{
 //    alert(data);
 //})
@@ -20,6 +21,11 @@ function communication(){
 
 socket.on('userCount', data => {
     count.innerHTML = data;
+})
+
+socket.on('playerData', data => {
+    player = data;
+    console.log(player);
 })
 
 button.addEventListener('click', communication);

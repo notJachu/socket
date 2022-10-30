@@ -6,6 +6,13 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 let users = {};
+const player = {
+  nickname: "",
+  id: "",
+  score: 0,
+  answers: []
+};
+let players = {};
 
 app.use(express.static(__dirname));
 app.get('/', (req, res) => {
@@ -22,11 +29,21 @@ function connected(socket){
     var num = Object.keys(users).length
     console.log("amount of players: " +num);
     io.emit('userCount', num);
+    player.nickname = "nick";
+    player.id = socket.id;
+    player.answers = ["auto", "amarant", "cebula", "losowe cos"];
+
+    players[player.id] = player;
+
+    socket.emit('playerData', players[socket.id]);
   })
-  //socket.emit('test', 'hello')
+
+
   socket.on('update', (data) => {
     console.log(data);
   })
+
+
   socket.on('disconnect', function() {
     delete users[socket.id];
     console.log(`player of id: ${socket.id} has disconnected`);
