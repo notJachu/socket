@@ -4,6 +4,9 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+var fs = require('fs');
+const { type } = require('os');
+
 
 let users = {};
 const player = {
@@ -51,8 +54,22 @@ function connected(socket){
     console.log("amount of players: " +num);
     io.emit('userCount', num);
   })
-}
 
+
+  socket.on('set1', function() {
+    fs.readFile('./resources/set1.txt', 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      var array = data.toString().split("\n");
+      for(i in array) {
+        console.log(array[i]);
+      }
+      socket.emit('set', array);
+    });
+  })
+  
+}
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
