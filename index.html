@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      #input {
+        display: none;
+      }
+
+      #connect {
+        display: block;
+      }
+
+      #wait {
+        display: none;
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
   <body>
+    <!--
       <h1>players connected:</h1>
       <br>
       <span id="count">count</span>
@@ -16,6 +30,26 @@
       <button id="set1">set1</button>
       <br>
       <span id="message">message</span>
+      -->
+
+      <form action="" id="connect">
+        <p>wpisz dane</p>
+        <p>nazwa <input type="text" id="name" autocomplete="off" maxlength="12" required></p>
+        <button type="submit">submit</button>
+      </form>
+
+      <form action="" id="input">
+        <p>kategorie</p>
+        <ul>
+          <li>Państwo <input id="panstwo" type="text" autocomplete="off"></li>
+          <li>miasto <input id="miasto" type="text" autocomplete="off"></li>
+          <li>placeholder <input id="placeholder" type="text" autocomplete="off"></li>
+        </ul>
+        <button type="submit">submit</button>
+      </form>
+      <div id="wait">
+        <p>waiting for second player</p>
+      </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
     <script src="/game.js"></script>

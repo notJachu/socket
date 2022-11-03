@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 var fs = require('fs');
-const { type } = require('os');
+var num = 0;
 
 
 let users = {};
@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 io.on('connection', connected);
 
 function connected(socket){
-  socket.on('newPlayer', (data) => {
+  /*socket.on('newPlayer', (data) => {
     console.log("a new player connected with id: " + socket.id);
     users[socket.id] = data;
     console.log("user's special number: " +users[socket.id]);
@@ -40,17 +40,28 @@ function connected(socket){
 
     socket.emit('playerData', players[socket.id]);
   })
+*/
 
+  socket.on('newPlayer', (data) => {
+    players[data.id] = data;
+    num = Object.keys(players).length;
+    console.log(`Player of name ${data.nickname} and id ${data.id} has connected`);
+    console.log("amount of players " +num);
+    if(num > 1){
+      io.emit('ready');
+    }  
+  })
 
-  socket.on('update', (data) => {
-    console.log(data);
+  socket.on('input', (data) => {
+    players[data.id].answers = data.answers;
+    console.log(players[data.id]);
   })
 
 
   socket.on('disconnect', function() {
     delete users[socket.id];
     console.log(`player of id: ${socket.id} has disconnected`);
-    num = Object.keys(users).length;
+    num = Object.keys(players).length;
     console.log("amount of players: " +num);
     io.emit('userCount', num);
   })
