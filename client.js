@@ -35,6 +35,7 @@ function getSet(){
 
 socket.on('set', (data) => {
     console.log(data);
+    compareStrings(data, player.answers)
 })
 
 button.addEventListener('click', communication);

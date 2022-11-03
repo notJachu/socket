@@ -34,7 +34,7 @@ function connected(socket){
     io.emit('userCount', num);
     player.nickname = "nick";
     player.id = socket.id;
-    player.answers = ["auto", "amarant", "cebula", "losowe cos"];
+    player.answers = ["auto", "amarant", "cebula", "losowe cos", "banan"];
 
     players[player.id] = player;
 
@@ -61,7 +61,7 @@ function connected(socket){
       if (err) {
         return console.log(err);
       }
-      var array = data.toString().split("\n");
+      var array = data.toString().replace(/\r/g, "").split("\n");
       for(i in array) {
         console.log(array[i]);
       }
