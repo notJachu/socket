@@ -6,6 +6,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 var fs = require('fs');
 var num = 0;
+var ready = 0;
 
 
 let users = {};
@@ -53,13 +54,18 @@ function connected(socket){
   })
 
   socket.on('input', (data) => {
+    ready++;
     players[data.id].answers = data.answers;
-    console.log(players[data.id]);
+    //console.log(players[data.id]);
+    if(ready > 1){
+      console.log(`emiting players collection ${JSON.stringify(players, null, 4)}`);
+      io.emit('playerData', players);
+    }
   })
 
 
   socket.on('disconnect', function() {
-    delete users[socket.id];
+    delete players[socket.id];
     console.log(`player of id: ${socket.id} has disconnected`);
     num = Object.keys(players).length;
     console.log("amount of players: " +num);

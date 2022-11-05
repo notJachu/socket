@@ -7,7 +7,7 @@ var socket = io('http://localhost:3000');
 const input = document.getElementById('input');
 const connect = document.getElementById('connect');
 const wait = document.getElementById('wait');
-
+var p2 = false;
 
 //socket.on('test', (data) =>{
 //    alert(data);
@@ -41,6 +41,7 @@ socket.on('set', (data) => {
 //button.addEventListener('click', communication);
 //set1.addEventListener('click', getSet);
 
+
 connect.onsubmit = function(e){
     e.preventDefault();
     myID = socket.id;
@@ -53,6 +54,12 @@ connect.onsubmit = function(e){
     //input.style.display = 'block';
 }
 
+socket.on('playerData', (data) => {
+    p2 = true;
+    players[data.id] = data;
+})
+
+
 input.onsubmit = function(e){
     e.preventDefault();
     panstwo = document.getElementById('panstwo').value;
@@ -60,9 +67,14 @@ input.onsubmit = function(e){
     placeholder = document.getElementById('placeholder').value;
     player.answers = [panstwo, miasto, placeholder];
     players[myID] = player;
-    socket.emit('input', {id: myID, answers: player.answers});
+    socket.emit('input', players[myID]);
     input.style.display = 'none';
     wait.style.display = 'block';
+    socket.on('playerData', (data) => {
+        console.log(data);
+        players = data;
+        console.log(players);
+    })
 }
 
 socket.on('ready', function() {

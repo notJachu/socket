@@ -34,3 +34,26 @@ function getScore(){
 //0ptk źle
 
 }
+
+function drawScore(catCount){
+    const res = document.getElementById('results');
+    const tbl = document.createElement("table");
+    for(let i in players){
+        console.log(i);
+        console.log(players[i]);
+        const row = document.createElement("tr");
+        const title = document.createElement("th");
+        const titleText = document.createTextNode(players[i].nickname);
+        title.appendChild(titleText);
+        row.appendChild(title);
+        for(let j = 0; j < catCount; j++){
+            const cell = document.createElement("td");
+            const cellText = document.createTextNode(players[i].answers[j]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+        tbl.appendChild(row);
+    }
+    res.appendChild(tbl);
+    res.style.display = 'block';
+}
