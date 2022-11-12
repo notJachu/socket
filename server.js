@@ -54,8 +54,8 @@ function connected(socket){
   })
 
   socket.on('input', (data) => {
-    ready++;
     players[data.id].answers = data.answers;
+    ready++;
     //console.log(players[data.id]);
     if(ready > 1){
       console.log(`emiting players collection ${JSON.stringify(players, null, 4)}`);
