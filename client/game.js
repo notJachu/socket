@@ -3,7 +3,8 @@ let player = {
     id: "",
     score: 0,
     answers: [],
-    isHost: false
+    isHost: false,
+    myRoom: ""
 };
 
 let set = {};

@@ -8,6 +8,10 @@ const input = document.getElementById('input');
 const connect = document.getElementById('connect');
 const wait = document.getElementById('wait');
 var p2 = false;
+var roomId;
+let rooms = [];
+const join = document.getElementById('join');
+const create = document.getElementById('create');
 
 //socket.on('test', (data) =>{
 //    alert(data);
@@ -49,6 +53,13 @@ socket.on('userCount', data => {
 //button.addEventListener('click', communication);
 //set1.addEventListener('click', getSet);
 
+join.onclick = function(){
+    //join screen
+}
+
+create.onclick = function(){
+    //create room screen
+}
 
 connect.onsubmit = function(e){
     e.preventDefault();

@@ -7,15 +7,21 @@ const io = new Server(server);
 var fs = require('fs');
 var num = 0;
 var ready = 0;
+var roomId;
+let rooms = [];
+
 
 
 let users = {};
-const player = {
+let player = {
   nickname: "",
   id: "",
   score: 0,
-  answers: []
+  answers: [],
+  isHost: false,
+  myRoom: ""
 };
+
 let players = {};
 
 app.use(express.static(__dirname));
@@ -47,7 +53,7 @@ function connected(socket){
     players[data.id] = data;
     num = Object.keys(players).length;
     console.log(`Player of name ${data.nickname} and id ${data.id} has connected`);
-    console.log("amount of players " +num);
+    console.log("amount of players " + num);
     if(num > 1){
       io.emit('ready');
     }  
